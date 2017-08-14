@@ -1,0 +1,11 @@
+# Configuration file for my normal Vagrant setup.
+network:
+    ip_address: 192.168.4.197
+    hostname: gcpdev.gothick.org.uk.localhost
+    aliases:
+
+synced_folders:
+    # Host folders are relative to the vagrant dir
+    - { host: ./../.., guest: /project, mount_options: ["dmode=777", "fmode=666"] }
+#    - { host: ./../html, guest: /var/www/html, mount_options: ["dmode=777", "fmode=666"] }
+#    - { host: ./../backups, guest: /var/backups }

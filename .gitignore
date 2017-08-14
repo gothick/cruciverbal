@@ -88,4 +88,5 @@ local.properties
 /config/service_account.json
 
 # Config file, which includes passwords
-/config/config.yml
+/config/config.yaml
+
