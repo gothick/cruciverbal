@@ -87,3 +87,5 @@ local.properties
 # Service account file. Don't check your private keys into GitHub, folks!
 /config/service_account.json
 
+# Config file, which includes passwords
+/config/config.yml

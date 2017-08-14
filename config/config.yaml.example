@@ -1,0 +1,14 @@
+service_account_file: config/service_account.json
+
+providers:
+  times: \Gothick\Cruciverbal\TimesProvider
+  guardian: \Gothick\Cruciverbal\GuardianProvider
+
+provider_params:
+  times:
+    username: your_times_email_address_here
+    password: your_times_password_here
+  guardian: ~
+
+printer: your_printer_name_here
+
