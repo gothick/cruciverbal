@@ -85,5 +85,5 @@ local.properties
 .worksheet
 
 # Service account file. Don't check your private keys into GitHub, folks!
-/service_account.json
+/config/service_account.json
 
