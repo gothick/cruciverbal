@@ -26,7 +26,7 @@ class GuardianProvider implements iCrosswordProvider {
     }
     if ($day_of_week == 0) {
        // Sunday Everyman
-       //$streams[] = $client->request('GET', "/obs.everyman.$date_string.pdf")->getBody();
+       $streams[] = $client->request('GET', "/obs.everyman.$date_string.pdf")->getBody();
     }
     return $streams;
   }
