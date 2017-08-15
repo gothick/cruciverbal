@@ -22,7 +22,8 @@
     "gothick/google-cloud-print": "dev-master",
     "nategood/commando": "^0.2.9",
     "guzzlehttp/guzzle": "~6.0",
-    "caseyamcl/configula": "~2.2"
+    "caseyamcl/configula": "~2.2",
+    "querypath/querypath": "^3.0"
   },
   "autoload": {
     "psr-4": {
