@@ -3,16 +3,20 @@ namespace Gothick\Cruciverbal;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-class TimesProvider implements iCrosswordProvider {
+class TimesProvider implements iCrosswordProvider
+{
 
     /** @var string Website username */
     private $username;
+
     /** @var string Website password */
     private $password;
+
     /** @var \GuzzleHttp\Client $client */
     private $client;
-    
-    public function __construct($params = null) {
+
+    public function __construct($params = null)
+    {
         if (empty($params['username']) || empty($params['password'])) {
             throw new \Exception('No username and password configured');
         }
@@ -84,7 +88,7 @@ class TimesProvider implements iCrosswordProvider {
                 ->find('.PuzzleItem--print-link a')
                 ->attr('href');
             $streams[] = $this->grab($print_url);
-                
+            
             // Monday to Friday: Quick Cryptic
             if ($day_of_week >= 1 && $day_of_week <= 5) {
                 $print_url = $qp->find('h3:contains("Quick"):first')
@@ -92,12 +96,13 @@ class TimesProvider implements iCrosswordProvider {
                     ->find('.PuzzleItem--print-link a')
                     ->attr('href');
                 $streams[] = $this->grab($print_url);
-                    
             }
         }
         return $streams;
     }
-    private function grab($print_url) {
+
+    private function grab($print_url)
+    {
         $response = $this->client->request('GET', $print_url);
         if ($response->getStatusCode() != 200) {
             throw new \Exception('Error fetching $url: ' . $response->getStatusCode . ': ' . $response->getReasonPhrase());
