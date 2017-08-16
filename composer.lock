@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "cc24ee6e35da2ccb045ad3e7c3a8dbe6",
+    "content-hash": "ca3e553273b976bdcad020e97bb36803",
     "packages": [
         {
             "name": "caseyamcl/configula",
@@ -246,11 +246,16 @@
         {
             "name": "gothick/google-cloud-print",
             "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gothick/google-cloud-print.git",
+                "reference": "0d8d53c3144cad9bd8ec7fa6b7a1f2f45d4c162a"
+            },
             "dist": {
-                "type": "path",
-                "url": "../google-cloud-print",
-                "reference": "557340e8f52c9077bd5ca1437ec2ff277fff28ae",
-                "shasum": null
+                "type": "zip",
+                "url": "https://api.github.com/repos/gothick/google-cloud-print/zipball/0d8d53c3144cad9bd8ec7fa6b7a1f2f45d4c162a",
+                "reference": "0d8d53c3144cad9bd8ec7fa6b7a1f2f45d4c162a",
+                "shasum": ""
             },
             "require": {
                 "google/apiclient": "~2.2",
@@ -279,9 +284,11 @@
                 "Google Cloud Print",
                 "print"
             ],
-            "transport-options": {
-                "symlink": true
-            }
+            "support": {
+                "source": "https://github.com/gothick/google-cloud-print/tree/master",
+                "issues": "https://github.com/gothick/google-cloud-print/issues"
+            },
+            "time": "2017-08-15T17:45:17+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",

@@ -10,11 +10,8 @@
   ],
   "repositories": [
     {
-      "type": "path",
-      "url": "../google-cloud-print",
-      "options": {
-        "symlink": true
-      }
+      "type": "vcs",
+      "url": "https://github.com/gothick/google-cloud-print/"
     }
   ],
   "require": {
