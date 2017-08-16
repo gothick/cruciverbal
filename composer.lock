@@ -249,12 +249,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/gothick/google-cloud-print.git",
-                "reference": "0d8d53c3144cad9bd8ec7fa6b7a1f2f45d4c162a"
+                "reference": "0e48ed7c678f99268f7bd2665dfe886bfc49aaac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gothick/google-cloud-print/zipball/0d8d53c3144cad9bd8ec7fa6b7a1f2f45d4c162a",
-                "reference": "0d8d53c3144cad9bd8ec7fa6b7a1f2f45d4c162a",
+                "url": "https://api.github.com/repos/gothick/google-cloud-print/zipball/0e48ed7c678f99268f7bd2665dfe886bfc49aaac",
+                "reference": "0e48ed7c678f99268f7bd2665dfe886bfc49aaac",
                 "shasum": ""
             },
             "require": {
@@ -288,7 +288,7 @@
                 "source": "https://github.com/gothick/google-cloud-print/tree/master",
                 "issues": "https://github.com/gothick/google-cloud-print/issues"
             },
-            "time": "2017-08-15T17:45:17+00:00"
+            "time": "2017-08-16T14:44:18+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
