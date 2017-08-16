@@ -30,5 +30,9 @@ foreach ($config->providers as $provider_name => $provider_class) {
 }
 // Throw them at the printer
 foreach ($pdf_streams as $pdf_stream) {
-    $gcp->submit($pdf_stream, 'application/pdf', $printer->id);
+    $result = $gcp->submit($pdf_stream, 'application/pdf', $printer->id);
+    if (!$result->success) {
+        // TODO: When we see this thrown, get some details to add to the exception.
+        throw new \Exception('Error submitting print job.');
+    }
 }
