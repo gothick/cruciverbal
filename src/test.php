@@ -9,18 +9,12 @@ $root_dir = __DIR__ . "/../";
 $config = new \Configula\Config($root_dir . 'config');
 putenv('GOOGLE_APPLICATION_CREDENTIALS=' . $root_dir . $config->service_account_file);
 
-$gcp = new \Gothick\GoogleCloudPrint\GoogleCloudPrint();
-//$printer = $gcp->search($config->printer);
-$printers = $gcp->search();
-var_dump($printers);
+//$gcp = new \Gothick\GoogleCloudPrint\GoogleCloudPrint();
+//$printers = $gcp->search("Brother");
 
-/*
-foreach ($config->providers as $provider_name => $provider_class) {
-  echo $provider_name . ': ' . $provider_class . "\n";
-  $params = $config->provider_params[$provider_name];
-  $provider = new $provider_class($params);
-  var_dump($provider->getPdfStreams());
-  // TODO: Stuff with the provider that actually gets us crosswords.
-}
-
-*/
+$client = new \GuzzleHttp\Client();
+$response = $client->request('GET', 'https://dl.dropboxusercontent.com/u/838327/Throwaway/crossword-20170805-25132.pdf');
+$body = $response->getBody();
+$blackener = new TimesBlackener($body);
+var_dump($blackener->getContents());
+//$blackener->close();

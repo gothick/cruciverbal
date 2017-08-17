@@ -107,6 +107,6 @@ class TimesProvider implements iCrosswordProvider
         if ($response->getStatusCode() != 200) {
             throw new \Exception('Error fetching $url: ' . $response->getStatusCode . ': ' . $response->getReasonPhrase());
         }
-        return $response->getBody();
+        return new TimesBlackener($response->getBody());
     }
 }
