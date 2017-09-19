@@ -12,6 +12,9 @@ class TimesProvider implements iCrosswordProvider
     /** @var string Website password */
     private $password;
 
+    /** @var boolean Should we fetch the quick cryptic? */
+    private $fetch_qc;
+
     /** @var \GuzzleHttp\Client $client */
     private $client;
 
@@ -22,6 +25,7 @@ class TimesProvider implements iCrosswordProvider
         }
         $this->username = $params['username'];
         $this->password = $params['password'];
+        $this->fetch_qc = $params['fetch_qc'];
     }
 
     public function getPdfStreams()
@@ -29,7 +33,7 @@ class TimesProvider implements iCrosswordProvider
         $this->client = new \GuzzleHttp\Client([
             'cookies' => true
         ]);
-        
+
         // Log into the Times website and grab the Crossword Club page, saving the login cookie while we're there.
         $response = $this->client->request('POST', 'https://login.thetimes.co.uk/?gotoUrl=https%3A%2F%2Fwww.thetimes.co.uk%2Fpuzzleclub%2Fcrosswordclub%2F', [
             'form_params' => [
@@ -62,11 +66,11 @@ class TimesProvider implements iCrosswordProvider
     function findStreams($homepage)
     {
         $streams = array();
-        
+
         $qp = \html5qp((string) $homepage);
-        
+
         $day_of_week = date('w');
-        
+
         if ($day_of_week == 0) {
             // Sunday: Sunday Times Cryptic and Mephisto
             $print_url = $qp->find('h3:contains("Sunday Times Cryptic"):first')
@@ -75,7 +79,7 @@ class TimesProvider implements iCrosswordProvider
                 ->attr('href');
             $this->grab($print_url);
             $streams[] = $this->grab($print_url);
-            
+
             $print_url = $qp->find('h3:contains("Mephisto"):first')
                 ->closest('.PuzzleItem')
                 ->find('.PuzzleItem--print-link a')
@@ -88,9 +92,9 @@ class TimesProvider implements iCrosswordProvider
                 ->find('.PuzzleItem--print-link a')
                 ->attr('href');
             $streams[] = $this->grab($print_url);
-            
+
             // Monday to Friday: Quick Cryptic
-            if ($day_of_week >= 1 && $day_of_week <= 5) {
+            if ($this->fetch_qc && $day_of_week >= 1 && $day_of_week <= 5) {
                 $print_url = $qp->find('h3:contains("Quick"):first')
                     ->closest('.PuzzleItem')
                     ->find('.PuzzleItem--print-link a')
