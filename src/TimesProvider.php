@@ -25,7 +25,7 @@ class TimesProvider implements iCrosswordProvider
         }
         $this->username = $params['username'];
         $this->password = $params['password'];
-        $this->fetch_qc = $params['fetch_qc'];
+        $this->fetch_qc = isset($params['fetch_qc']) ? $params['fetch_qc'] : true;
     }
 
     public function getPdfStreams()
