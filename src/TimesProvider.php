@@ -111,6 +111,8 @@ class TimesProvider implements iCrosswordProvider
         if ($response->getStatusCode() != 200) {
             throw new \Exception('Error fetching $url: ' . $response->getStatusCode . ': ' . $response->getReasonPhrase());
         }
-        return new TimesBlackener($response->getBody());
+        // MG The Times have now fixed their bloody printing! No need to blacken it manually.
+        return $response->getBody();
+        //return new TimesBlackener($response->getBody());
     }
 }
