@@ -14,6 +14,7 @@ class TimesProvider implements iCrosswordProvider
 
     /** @var boolean Should we fetch the quick cryptic? */
     private $fetch_qc;
+    private $fetch_mephisto;
 
     /** @var \GuzzleHttp\Client $client */
     private $client;
@@ -26,6 +27,7 @@ class TimesProvider implements iCrosswordProvider
         $this->username = $params['username'];
         $this->password = $params['password'];
         $this->fetch_qc = isset($params['fetch_qc']) ? $params['fetch_qc'] : true;
+        $this->fetch_mephisto = isset($params['fetch_mephisto']) ? $params['fetch_mephisto'] : true;
     }
 
     public function getPdfStreams()
@@ -79,12 +81,13 @@ class TimesProvider implements iCrosswordProvider
                 ->attr('href');
             $this->grab($print_url);
             $streams[] = $this->grab($print_url);
-
-            $print_url = $qp->find('h3:contains("Mephisto"):first')
-                ->closest('.PuzzleItem')
-                ->find('.PuzzleItem--print-link a')
-                ->attr('href');
-            $streams[] = $this->grab($print_url);
+            if ($this->fetch_mephisto) {
+              $print_url = $qp->find('h3:contains("Mephisto"):first')
+                  ->closest('.PuzzleItem')
+                  ->find('.PuzzleItem--print-link a')
+                  ->attr('href');
+              $streams[] = $this->grab($print_url);
+            }
         } else {
             // Monday to Saturday: Standard Cryptic
             $print_url = $qp->find('h3:contains("Times Cryptic No"):first')
