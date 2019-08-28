@@ -32,26 +32,32 @@ class TimesProvider implements iCrosswordProvider
 
     public function getPdfStreams()
     {
-        $this->client = new \GuzzleHttp\Client([
-            'cookies' => true
-        ]);
+        try {
 
-        // Log into the Times website and grab the Crossword Club page, saving the login cookie while we're there.
-        $response = $this->client->request('POST', 'https://login.thetimes.co.uk/?gotoUrl=https%3A%2F%2Fwww.thetimes.co.uk%2Fpuzzleclub%2Fcrosswordclub%2F', [
-            'form_params' => [
-                'gotoUrl' => 'https%3A%2F%2Fwww.thetimes.co.uk%2Fpuzzleclub%2Fcrosswordclub%2F',
-                'username' => $this->username,
-                'password' => $this->password,
-                'rememberMe' => 'on',
-                'Submit' => 'Login'
-            ],
-                /* The Times login system doesn't half chuck you around the place. */
-                'allow_redirects' => [
-                'max' => 10
-            ]
-        ]);
-        if ($response->getStatusCode() != 200) {
-            throw new \Exception('Error logging in: ' . $response->getStatusCode . ': ' . $response->getReasonPhrase());
+            $this->client = new \GuzzleHttp\Client([
+                'cookies' => true
+            ]);
+
+            // Log into the Times website and grab the Crossword Club page, saving the login cookie while we're there.
+            $response = $this->client->request('POST', 'https://login.thetimes.co.uk/?gotoUrl=https%3A%2F%2Fwww.thetimes.co.uk%2Fpuzzleclub%2Fcrosswordclub%2F', [
+                'form_params' => [
+                    'gotoUrl' => 'https%3A%2F%2Fwww.thetimes.co.uk%2Fpuzzleclub%2Fcrosswordclub%2F',
+                    'username' => $this->username,
+                    'password' => $this->password,
+                    'rememberMe' => 'on',
+                    'Submit' => 'Login'
+                ],
+                    /* The Times login system doesn't half chuck you around the place. */
+                    'allow_redirects' => [
+                    'max' => 10
+                ]
+            ]);
+            if ($response->getStatusCode() != 200) {
+                throw new \Exception('Error logging in: ' . $response->getStatusCode . ': ' . $response->getReasonPhrase());
+            }
+        }
+        catch(\Exception $e) {
+            throw new \Exception("Unexpected exception in getPdfStreams", $e->getCode(), $e);
         }
         return $this->findStreams($response->getBody());
     }
@@ -69,8 +75,12 @@ class TimesProvider implements iCrosswordProvider
     {
         $streams = array();
 
-        $qp = \html5qp((string) $homepage);
-
+        try {
+            $qp = \html5qp((string) $homepage);
+        }
+        catch (\Exception $e) {
+            throw new \Exception('Error creating QueryPath for ' . $homepage, $e->getCode(), $e);
+        }
         $day_of_week = date('w');
 
         if ($day_of_week == 0) {
@@ -110,9 +120,15 @@ class TimesProvider implements iCrosswordProvider
 
     private function grab($print_url)
     {
-        $response = $this->client->request('GET', $print_url);
-        if ($response->getStatusCode() != 200) {
-            throw new \Exception('Error fetching $url: ' . $response->getStatusCode . ': ' . $response->getReasonPhrase());
+        try {
+            $response = $this->client->request('GET', $print_url);
+            if ($response->getStatusCode() != 200) {
+                throw new \Exception("Error fetching url '$print_url': " . $response->getStatusCode . ': ' . $response->getReasonPhrase());
+            }
+        }
+        catch (\Exception $e) {
+            // echo "Error fetching url '$print_url' in " . __FUNCTION__ . "\n";
+            throw new \Exception("Error fetching url '$print_url'", $e->getCode(), $e);
         }
         // MG The Times have now fixed their bloody printing! No need to blacken it manually.
         return $response->getBody();
