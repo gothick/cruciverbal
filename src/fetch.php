@@ -39,6 +39,7 @@ try {
     }
 }
 catch (\Exception $e) {
-    echo "Error during fetch: {$e->getMessage()} \n";
-    echo $e->getTraceAsString();
+    fwrite(STDERR, "Error during fetch: {$e->getMessage()} \n");
+    fwrite(STDERR, $e->getTraceAsString());
+    throw $e;
 }
