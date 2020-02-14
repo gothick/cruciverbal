@@ -3,10 +3,19 @@ namespace Gothick\Cruciverbal;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use Configula\ConfigFactory as Config;
+
 try {
     $root_dir = __DIR__ . "/../";
 
-    $config = new \Configula\Config($root_dir . 'config');
+    $config = Config::loadPath($root_dir . 'config');
+
+    # Sometimes we may comment out all our providers.
+    if (!$config->hasValue("providers")) {
+      echo("Exiting: No providers configured.\n");
+      exit(0);
+    }
+
     putenv('GOOGLE_APPLICATION_CREDENTIALS=' . $root_dir . $config->service_account_file);
 
     $gcp = new \Gothick\GoogleCloudPrint\GoogleCloudPrint();
